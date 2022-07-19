@@ -11,7 +11,7 @@ const { getUsuarios, CrearUsuario, actualizarUsuario, eliminarUsuario } = requir
 const router = Router()
 
 //GET
-router.get('/', validarJWT, getUsuarios)
+router.get('/',  getUsuarios)
 //POST
 router.post('/', [
     check('nombre', 'El nombre es obligatorio').not().isEmpty(),

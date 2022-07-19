@@ -2,18 +2,31 @@
 const { response, request } = require('express')
 const bcrypt = require('bcryptjs')
 const { statusResponse, bodyError, body400 } = require('../functions/functions')
-const Usuario = require('../models/usuario.model')
 const { generarJWT } = require('../helpers/jwt')
 
+
+// load model
+const Usuario = require('../models/usuario.model')
 
 /*-------------------------------GET USUARIOS---------------------------------------*/
 
 const getUsuarios = async (req = request, res = response) => {
 
-    const usuarios = await Usuario.find({}, 'nombre email rol google')
+    const d = Number(req.query.d) || 0
+
+    const [usuarios, total] = await Promise.all([ // ambas promesas se ejecutan de manera simultanea
+        Usuario.find({}, 'nombre email rol google img')
+            .skip(d)
+            .limit(5),
+        Usuario.count()
+    ])
+
     res.json({
         ok: true,
-        usuarios
+        total,
+        userTotal: usuarios.length,
+        usuarios,
+
     })
 }
 

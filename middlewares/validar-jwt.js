@@ -13,7 +13,7 @@ const validarJWT = (req, res, next) => {
     // valida token generado
     try {
         const { uid } = jwt.verify(token, process.env.JWT_SECRET)
-        res.uid = uid
+        req.uid = uid
         next()
     } catch (error) {
         return res.status(401).json({
