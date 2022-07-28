@@ -13,6 +13,9 @@ app.use(cors())
 //lectura y parseo del body
 app.use(express.json())
 
+// carpeta publica
+app.use(express.static('public'))
+
 
 //base de datos
 dbConnect()
