@@ -12,6 +12,7 @@ const router = Router()
 
 //GET
 router.get('/', validarJWT, getMedicos)
+
 //POST
 router.post('/', [
     validarJWT,
@@ -20,9 +21,15 @@ router.post('/', [
     check('hospital', 'El id del hospital es obligatorio').isMongoId(),
     validarCampos
 ], crearMedicos)
+
 //PUT
-router.put('/:id', [], actualizarMedicos)
+router.put('/:id', [
+    validarJWT,
+    check('nombre', 'El nombre del medico es obligatorio').not().isEmpty(),
+    validarCampos
+], actualizarMedicos)
+
 //DELETE
-router.delete('/', borrarMedicos)
+router.delete('/:id', [validarJWT], borrarMedicos)
 
 module.exports = router

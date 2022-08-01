@@ -14,7 +14,6 @@
     <script>
         let url = "http://localhost:3000/api/login/google"
         async function handleCredentialResponse(response) {
-            console.log(response.credential, response)
             await fetch(url, {
                 method: "POST",
                 headers: { 'Content-Type': 'application/json' },
@@ -22,7 +21,7 @@
             })
                 .then(resp => resp.json())
                 .then(data => console.log("Nuestro server", data))
-                .catch(console.log())
+                .catch()
         }
         window.onload = function () {
             google.accounts.id.initialize({

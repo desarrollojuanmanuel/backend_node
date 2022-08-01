@@ -29,7 +29,7 @@ const login = async (req = request, res = response) => {
         })
     } catch (error) {
         console.log(error)
-        return statusResponse(500, bodyError("Hable con el administrador"), res)
+        return statusResponse(500, bodyError(process.env.ERROR_ADMIN), res)
     }
 }
 
@@ -75,7 +75,17 @@ const googleSingIn = async (req = request, res = response) => {
 
 }
 
+const renewToken = async (req = request, res = response) => {
+    // genear el token
+    const token = await generarJWT(req.uid)
+    return res.json({
+        ok: true,
+
+    })
+}
+
 module.exports = {
     login,
-    googleSingIn
+    googleSingIn,
+    renewToken
 }
